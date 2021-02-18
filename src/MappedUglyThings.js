@@ -1,9 +1,12 @@
 import React from "react"
-import ConsumerUglyThings from "./UglyThings.js"
+import {UglyThingsConsumer} from "./UglyThings.js"
+
 function MappedUglyThings(){
     return (
-        <ConsumerUglyThings>
+        <UglyThingsConsumer>
             {({uglythings}) => {
+                console.log(uglythings)
+                return(
                     uglythings.map(
                         (uglything) => {
                             /*you could make the following div into its own component if that makes things easier to read / makes more sense */
@@ -14,8 +17,8 @@ function MappedUglyThings(){
                             </div>
                         }
                     )
-            }}   
-        </ConsumerUglyThings>
+           ) }}   
+        </UglyThingsConsumer>
     )
 }
 export default MappedUglyThings

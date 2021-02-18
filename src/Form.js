@@ -1,4 +1,6 @@
 import React, {Component}from "react"
+import {UglyThingsConsumer} from "./UglyThings"
+
 class Form extends Component{
     state={
         title:"",
@@ -9,14 +11,11 @@ class Form extends Component{
         const{name, value} = e.target
         this.setState({[name]: value})
     }
-    handleSubmit=(e)=>{
-        this.setState(prevState => ({
-            //Unsure here
-        } )
-        )}
     render(){
-    return(
-    <Form onSubmit={this.handleSubmit}>
+    return(                    
+     <UglyThingsConsumer> 
+    {(context)=>(
+        <form onSubmit={this.handleSubmit}>
         <input 
         name="title"
         placeholder="TITLE"
@@ -35,9 +34,15 @@ class Form extends Component{
         value={this.state.imgUrl}
         onChange={this.handleChange}
         />
-        <button onClick={this.handleSubmit}> Submit</button>
+        <button onClick={(e)=>{
+            e.preventDefault()
+            context.submission(this.state)}}> Submit</button>
         {/* put request </button> */}
-    </Form>
+        {/* Need to add this info to state now (UglyThings component). And get request written in UglyThings, and then  in EachItems*/}
+    </form>
+    )}
+    </UglyThingsConsumer> 
+   
     )}
 }
 export default Form
