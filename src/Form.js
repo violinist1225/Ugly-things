@@ -15,7 +15,7 @@ class Form extends Component{
     return(                    
      <UglyThingsConsumer> 
     {(context)=>(
-        <form onSubmit={this.handleSubmit}>
+        <form>
         <input 
         name="title"
         placeholder="TITLE"
