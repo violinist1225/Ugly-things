@@ -1,3 +1,4 @@
+import Form2 from "./Form2"
 import React from "react" 
 import axios from "axios"
 const {Provider, Consumer} = React.createContext()
@@ -35,28 +36,38 @@ class UglyThingsProvider extends React.Component{
             .then(res => this.setState({uglythingsList: res.data}))
             .catch(err => console.log(err))
         }
-        editButton = (passedThing, stringOne, stringTwo) => {
-            let newArr = this.state.uglyThingsList.map(thing => {
-                if(passedThing.id === thing.id){
-                    // passedThing.topText = stringOne
-                    // passedThing.bottomText = stringTwo
-                    return passedThing
-                } else{
-                    return thing //not sure what to return 
-                }
-            })
-            this.setState(prevState => ({...prevState, uglyThingsList: newArr}))
+        editB = (thingId) => {
+            const newObj = {
+                title: this.state.title,
+                description: this.state.description
+            }
+            console.log("newArr", newObj)
+           axios.put(`https://api.vschool.io/MayaPurcell/thing/${thingId}`, newObj)
+            .then(res =>
+                 this.setState(prevState => ({
+                     ...prevState.uglyThingsList, newObj
+                 }
+            )
+        )
+            // this.setState(prevState => ({...prevState, uglyThingsList: newArr}))
+        )
+    } 
 
-        }
-        deleteButton = (thingId) => {
-            let newArray = this.state.uglyThingsList.filter(thing => thingId !== thing.id)
+        deleteB = (thingId) => {
+            console.log("deleteButton")
+            console.log(thingId)
+            axios.delete(`https://api.vschool.io/MayaPurcell/thing/${thingId}`)
+            let newArray = this.state.uglyThingsList.filter(thing => thingId !== thing._id)
             this.setState(prevState => ({...prevState, uglyThingsList: newArray}))   
         }
+
     render(){
         return(
             <Provider value={{uglythings: this.state.uglyThingsList,
                 submission: this.submitData,
-                getInfo: this.getDataRequest
+                getInfo: this.getDataRequest,
+                deleteB: this.deleteB,
+                editB: this.editB
             }}
             >
                 {this.props.children}
@@ -64,8 +75,28 @@ class UglyThingsProvider extends React.Component{
         )
     }
 }
-//             In context provider component:
-// write the functions for the GET, POST, PUT, DELETE requests (read Ugly Things API information)
-// pass down those functions in the context value object
-// pass down the uglyThings array in the context value object
+
 export {UglyThingsProvider, Consumer as UglyThingsConsumer}
+
+// getDataRequest method in UglyThings Component , needs to be appropriately passed into 
+// MappedUglyThings Component. Unsure 
+
+
+// editB = (passedThing, title, description) => {
+//     console.log("EDIT BUTTON IS WORKING")
+//     axios.put(`url${id}`, newArr)
+//      let newArr = this.state.uglyThingsList.map(thing => {
+//          if(passedThing.id === thing.id){
+//              // passedThing.title = title
+//              // passedThing.description = description 
+//              return (
+//                  <Form2  
+//                  idOne= {passedThing.id}
+//                  passedThing = {passedThing}
+//                  />
+//              )
+//              }
+//      })
+//      this.setState(prevState => ({...prevState, uglyThingsList: newArr}))
+
+//  }

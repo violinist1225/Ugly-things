@@ -2,12 +2,11 @@ import React from "react"
 import {UglyThingsConsumer} from "./UglyThings.js"
 
 function MappedUglyThings(){
-
-
+   
     return (
         <UglyThingsConsumer>
             {
-            ({uglythings}) => {
+            ({uglythings, deleteB, editB}) => {
 
                 console.log(uglythings)
 
@@ -17,8 +16,8 @@ function MappedUglyThings(){
                             <h1>{uglything.title}</h1>
                             <img src={`${uglything.imgUrl}`} />
                             <h1>{uglything.description}</h1>
-                            <button onClick ={() =>editButton}>Edit</button> 
-                            <button onClick ={() =>deleteButton}> Delete</button>
+                            <button onClick ={() =>editB(uglything._id)}>Edit</button> 
+                            <button onClick ={()=>deleteB(uglything._id)}> Delete</button>
                         </div>
                     )
                 })

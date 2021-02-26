@@ -1,10 +1,9 @@
 import React, {Component}from "react"
 import {UglyThingsConsumer} from "./UglyThings"
 
-class Form extends Component{
+class Form2 extends Component{
     state={
         title:"",
-        imgUrl:"",
         description: ""
     }
     handleChange=(e)=>{
@@ -29,21 +28,15 @@ class Form extends Component{
         value={this.state.description}
         onChange={this.handleChange}
         />
-        <input
-        name="imgUrl"
-        placeholder="IMAGE URL"
-        value={this.state.imgUrl}
-        onChange={this.handleChange}
-        />
         <button onClick={(e)=>{
             e.preventDefault()
-            context.submission(this.state)}}> Submit</button>
-        {/* put request </button> */}
-        {/* Need to add this info to state now (UglyThings component). And get request written in UglyThings, and then  in EachItems*/}
-    </form>
+        }}
+        > Submit
+        </button>
+        </form>
     )}
     </UglyThingsConsumer> 
    
     )}
 }
-export default Form
+export default Form2
