@@ -1,4 +1,3 @@
-import Form2 from "./Form2"
 import React from "react" 
 import axios from "axios"
 const {Provider, Consumer} = React.createContext()
@@ -25,33 +24,32 @@ class UglyThingsProvider extends React.Component{
             )
         .catch(err => console.log(err))
         }
-    //deleted inputs from line 15 since get requests don't need a request body
-    // retrieveInfo=()=>{
-    //     axios.get(this.uglyListVariable)
-    //     .then(res => this.setState({uglythingsList: res.data}))
-    // }
+    
+
+    edit =(passedThing, newEdits) =>{
+        axios.put(`https://api.vschool.io/MayaPurcell/thing/${passedThing._id}`, newEdits)
+    let newArr = this.state.uglyThingsList.map(thing => {
+        if(passedThing._id === thing._id){
+            thing.title = newEdits.title
+            thing.description = newEdits.description 
+            console.log(thing)
+            return thing 
+            } else{
+               return thing 
+            }
+    })
+    console.log(newArr)
+    this.setState(prevState => ({...prevState, uglyThingsList: newArr}))
+}
+
+    
     getDataRequest =() =>{
         console.log('hello')
             axios.get(this.uglyListVariable)
             .then(res => this.setState({uglythingsList: res.data}))
             .catch(err => console.log(err))
         }
-        editB = (thingId) => {
-            const newObj = {
-                title: this.state.title,
-                description: this.state.description
-            }
-            console.log("newArr", newObj)
-           axios.put(`https://api.vschool.io/MayaPurcell/thing/${thingId}`, newObj)
-            .then(res =>
-                 this.setState(prevState => ({
-                     ...prevState.uglyThingsList, newObj
-                 }
-            )
-        )
-            // this.setState(prevState => ({...prevState, uglyThingsList: newArr}))
-        )
-    } 
+       
 
         deleteB = (thingId) => {
             console.log("deleteButton")
@@ -67,7 +65,7 @@ class UglyThingsProvider extends React.Component{
                 submission: this.submitData,
                 getInfo: this.getDataRequest,
                 deleteB: this.deleteB,
-                editB: this.editB
+                edit: this.edit
             }}
             >
                 {this.props.children}

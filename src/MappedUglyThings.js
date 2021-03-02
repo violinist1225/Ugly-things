@@ -1,5 +1,6 @@
 import React from "react"
 import {UglyThingsConsumer} from "./UglyThings.js"
+import Form2 from "./Form2"
 
 function MappedUglyThings(){
    
@@ -17,6 +18,10 @@ function MappedUglyThings(){
                             <img src={`${uglything.imgUrl}`} />
                             <h1>{uglything.description}</h1>
                             <button onClick ={() =>editB(uglything._id)}>Edit</button> 
+                            <Form2 
+                            uglyThing = {uglything}  
+                            
+                            />
                             <button onClick ={()=>deleteB(uglything._id)}> Delete</button>
                         </div>
                     )

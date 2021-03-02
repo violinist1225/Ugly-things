@@ -9,9 +9,14 @@ class Form2 extends Component{
     handleChange=(e)=>{
         const{name, value} = e.target
         this.setState({[name]: value})
-    }
+    }         
     
     render(){
+        const newObj= {
+            title: this.state.title,
+            description: this.state.description 
+        }
+        console.log(this.props.uglyThing)
     return(                    
      <UglyThingsConsumer> 
     {(context)=>(
@@ -30,8 +35,9 @@ class Form2 extends Component{
         />
         <button onClick={(e)=>{
             e.preventDefault()
+            context.edit(this.props.uglyThing, newObj)    
         }}
-        > Submit
+        > Submit 
         </button>
         </form>
     )}
@@ -40,3 +46,6 @@ class Form2 extends Component{
     )}
 }
 export default Form2
+
+
+
