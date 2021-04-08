@@ -1,10 +1,14 @@
 import React from "react" 
 import axios from "axios"
-const {Provider, Consumer} = React.createContext()
+const UglyContext = React.createContext()
+//This is supposed to be named UglyThingsContext
 
+//api is not getting anything from getDataRequest. Not getting list of ugly things. Everything from Api is getting rendered. I shoudl only be able to see all the items.
+
+//Ultimate: renders everything in API correctly. render any updates made
 class UglyThingsProvider extends React.Component{
     constructor(){
-        super()
+        super()  
     this.state={
          uglyThingsList: []
     }
@@ -46,55 +50,38 @@ class UglyThingsProvider extends React.Component{
     getDataRequest =() =>{
         console.log('hello')
             axios.get(this.uglyListVariable)
-            .then(res => this.setState({uglythingsList: res.data}))
+            .then(res => this.setState({uglyThingsList: res.data}))
             .catch(err => console.log(err))
         }
+        //make sure getDataRequest renders list
        
 
         deleteB = (thingId) => {
             console.log("deleteButton")
             console.log(thingId)
             axios.delete(`https://api.vschool.io/MayaPurcell/thing/${thingId}`)
-            let newArray = this.state.uglyThingsList.filter(thing => thingId !== thing._id)
-            this.setState(prevState => ({...prevState, uglyThingsList: newArray}))   
+                .then(res => {
+                    console.log(res.data)
+                    let newArray = this.state.uglyThingsList.filter(thing => thingId !== thing._id)
+                    this.setState(prevState => ({...prevState, uglyThingsList: newArray}))
+                })
+               
         }
 
     render(){
         return(
-            <Provider value={{uglythings: this.state.uglyThingsList,
+            <UglyContext.Provider value={{uglyThingsList: this.state.uglyThingsList,
                 submission: this.submitData,
                 getInfo: this.getDataRequest,
                 deleteB: this.deleteB,
-                edit: this.edit
+                editB: this.edit
             }}
             >
                 {this.props.children}
-            </Provider>
+            </UglyContext.Provider>
         )
     }
 }
 
-export {UglyThingsProvider, Consumer as UglyThingsConsumer}
+export {UglyThingsProvider, UglyContext}
 
-// getDataRequest method in UglyThings Component , needs to be appropriately passed into 
-// MappedUglyThings Component. Unsure 
-
-
-// editB = (passedThing, title, description) => {
-//     console.log("EDIT BUTTON IS WORKING")
-//     axios.put(`url${id}`, newArr)
-//      let newArr = this.state.uglyThingsList.map(thing => {
-//          if(passedThing.id === thing.id){
-//              // passedThing.title = title
-//              // passedThing.description = description 
-//              return (
-//                  <Form2  
-//                  idOne= {passedThing.id}
-//                  passedThing = {passedThing}
-//                  />
-//              )
-//              }
-//      })
-//      this.setState(prevState => ({...prevState, uglyThingsList: newArr}))
-
-//  }

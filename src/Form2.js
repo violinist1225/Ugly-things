@@ -1,5 +1,5 @@
 import React, {Component}from "react"
-import {UglyThingsConsumer} from "./UglyThings"
+import {UglyContext} from "./UglyThings"
 
 class Form2 extends Component{
     state={
@@ -18,7 +18,7 @@ class Form2 extends Component{
         }
         console.log(this.props.uglyThing)
     return(                    
-     <UglyThingsConsumer> 
+     <UglyContext.Consumer> 
     {(context)=>(
         <form>
         <input 
@@ -35,13 +35,13 @@ class Form2 extends Component{
         />
         <button onClick={(e)=>{
             e.preventDefault()
-            context.edit(this.props.uglyThing, newObj)    
+            context.editB(this.props.uglyThing, newObj)    
         }}
         > Submit 
         </button>
         </form>
     )}
-    </UglyThingsConsumer> 
+    </UglyContext.Consumer> 
    
     )}
 }

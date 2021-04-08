@@ -1,14 +1,14 @@
 import React from "react"
-import ConsumerUglyThings from "./UglyThings.js"
+import {UglyContext} from "./UglyThings.js"
 
 function EachItem(){
     return (
-        <ConsumerUglyThings>
+        <UglyContext.Consumer>
             {({uglythings}) => ( 
                 <img src={uglythings.imgUrl} alt="Error" />
                 )
             }   
-        </ConsumerUglyThings>
+        </UglyContext.Consumer>
     )
 
 }

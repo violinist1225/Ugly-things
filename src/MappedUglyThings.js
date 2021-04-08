@@ -1,22 +1,22 @@
 import React from "react"
-import {UglyThingsConsumer} from "./UglyThings.js"
+import {UglyContext} from "./UglyThings.js"
 import Form2 from "./Form2"
+import "./styles.css"
 
 function MappedUglyThings(){
    
     return (
-        <UglyThingsConsumer>
+        <UglyContext.Consumer>
             {
-            ({uglythings, deleteB, editB}) => {
+            ({uglyThingsList, deleteB, editB}) => {
+                console.log(uglyThingsList)
 
-                console.log(uglythings)
-
-                const uglyThingsList = uglythings.map(uglything => { 
+                return uglyThingsList.map(uglything => { 
                     return (
                         <div key={uglything._id}>
-                            <h1>{uglything.title}</h1>
+                            <h1 class="titleOne">{uglything.title}</h1>
                             <img src={`${uglything.imgUrl}`} />
-                            <h1>{uglything.description}</h1>
+                            <h1 class="titleOne">{uglything.description}</h1>
                             <button onClick ={() =>editB(uglything._id)}>Edit</button> 
                             <Form2 
                             uglyThing = {uglything}  
@@ -26,10 +26,8 @@ function MappedUglyThings(){
                         </div>
                     )
                 })
-                
-                return uglyThingsList
             }}   
-        </UglyThingsConsumer>
+        </UglyContext.Consumer>
     )
 }
 export default MappedUglyThings

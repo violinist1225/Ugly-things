@@ -1,5 +1,5 @@
 import React, {Component}from "react"
-import {UglyThingsConsumer} from "./UglyThings"
+import {UglyContext} from "./UglyThings"
 
 class Form extends Component{
     state={
@@ -14,7 +14,7 @@ class Form extends Component{
     
     render(){
     return(                    
-     <UglyThingsConsumer> 
+     <UglyContext.Consumer> 
     {(context)=>(
         <form>
         <input 
@@ -42,7 +42,7 @@ class Form extends Component{
         {/* Need to add this info to state now (UglyThings component). And get request written in UglyThings, and then  in EachItems*/}
     </form>
     )}
-    </UglyThingsConsumer> 
+    </UglyContext.Consumer> 
    
     )}
 }
